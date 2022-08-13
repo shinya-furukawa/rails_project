@@ -1,0 +1,26 @@
+version: '3'
+services:
+  db:
+    container_name: rails_postgres
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+  web:
+    container_name: rails_web
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - .:/rails_web
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+volumes:
+  postgres_volume:

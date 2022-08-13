@@ -1,0 +1,15 @@
+<h1>Todo一覧</h1>
+<h2>タスク名</h2>
+<% @tasks.each do |task|%>
+    <div style="display: flex; ">
+        <%= task.title %>
+        <div style="margin: 0px 5px">
+            <%= link_to '編集', edit_task_path(task) %>
+        </div>
+        <div style="margin: 0px 5px">
+            <%= button_to '削除', task_path(task), :method=> :delete %>
+        </div>
+    </div>
+<% end %>
+
+<%= link_to '追加', new_task_path %>
